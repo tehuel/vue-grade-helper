@@ -35,7 +35,7 @@ const { list: excercisesList } = storeToRefs(useExcercisesStore())
       </li>
     </ul>
 
-    <h2>List All</h2>
+    <h2>List All Grades</h2>
     <pre>{{ gradesList }}</pre>
   </div>
 </template>

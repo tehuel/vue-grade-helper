@@ -4,8 +4,8 @@ import MainNavbar from './components/MainNavbar.vue'
 </script>
 
 <template>
-  <div>
+  <main class="container">
     <main-navbar />
     <RouterView />
-  </div>
+  </main>
 </template>

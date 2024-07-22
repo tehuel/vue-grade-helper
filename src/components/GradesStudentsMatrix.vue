@@ -12,20 +12,26 @@ const { list: excercisesList } = storeToRefs(useExcercisesStore())
 </script>
 
 <template>
-  <table>
-    <tr>
-      <td>Student</td>
-      <td v-for="ex in excercisesList" :key="ex">{{ ex.path }}</td>
-    </tr>
-    <tr v-for="st in studentsList" :key="st">
-      <td>{{ st.firstName }}</td>
-      <td v-for="ex in excercisesList" :key="{ ...ex, ...st }">
-        <add-grade-form :studentId="st.firstName" :excerciseId="ex.path" />
-        <hr>
-        <pre>Grade: {{ getGradeForStudentAndExcercise(st.firstName, ex.path) }}</pre>
-      </td>
-    </tr>
-  </table>
+  <div class="overflow-auto">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Student</th>
+          <th scope="col" v-for="ex in excercisesList" :key="ex">{{ ex.path }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="st in studentsList" :key="st">
+          <th scope="row">{{ st.firstName }}</th>
+          <td v-for="ex in excercisesList" :key="{ ...ex, ...st }">
+            <add-grade-form :studentId="st.firstName" :excerciseId="ex.path" />
+            <hr>
+            <pre>Grade: {{ getGradeForStudentAndExcercise(st.firstName, ex.path) }}</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <style>

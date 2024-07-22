@@ -7,8 +7,10 @@ import AddExcerciseForm from '../components/AddExcerciseForm.vue'
   <div>
     <h1>Excercises</h1>
 
-    <h2>Add</h2>
-    <add-excercise-form />
+    <details>
+      <summary role="button" class="secondary">Add</summary>
+      <add-excercise-form />
+    </details>
 
     <h2>List All</h2>
     <excercises-list />

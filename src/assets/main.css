@@ -1,30 +1,3 @@
-#app {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
-}
-
-a {
-  color: rgb(0, 180, 120);
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-nav {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-nav a {
-  text-decoration: none;
-  transition: 0.4s;
-  padding: 3px;
-}
-
-nav a.router-link-active {
-  color: rgb(0, 150, 100);
-  background-color: rgb(230, 245, 245);
+:root {
+  --pico-font-family-sans-serif: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
 }

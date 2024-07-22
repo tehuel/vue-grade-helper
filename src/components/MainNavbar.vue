@@ -4,9 +4,19 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/students">Students</RouterLink>
-    <RouterLink to="/excercises">Excercises</RouterLink>
-    <RouterLink to="/grades">Grades</RouterLink>
+    <ul>
+      <li>
+        <RouterLink to="/">Home</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/students">Students</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/excercises">Excercises</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/grades">Grades</RouterLink>
+      </li>
+    </ul>
   </nav>
 </template>
