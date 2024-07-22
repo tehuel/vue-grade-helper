@@ -22,14 +22,20 @@ function onSubmit() {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <label for="firstName">First Name</label>
-    <input type="text" id="firstName" v-model="student.firstName" />
+    <div>
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" v-model="student.firstName" />
+    </div>
 
-    <label for="lastName">Last Name</label>
-    <input type="text" id="lastName" v-model="student.lastName" />
+    <div>
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" v-model="student.lastName" />
+    </div>
 
-    <label for="githubUsername">Github Username</label>
-    <input type="text" id="githubUsername" v-model="student.githubUsername" />
+    <div>
+      <label for="githubUsername">Github</label>
+      <input type="text" id="githubUsername" v-model="student.githubUsername" />
+    </div>
 
     <button type="submit">Add Student</button>
   </form>

@@ -21,11 +21,15 @@ function onSubmit() {
 
 <template>
   <form @submit.prevent="onSubmit">
-    <label for="title">Title</label>
-    <input type="text" id="title" v-model="excercise.title" />
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" v-model="excercise.title" />
+    </div>
 
-    <label for="path">Path</label>
-    <input type="text" id="path" v-model="excercise.path" />
+    <div>
+      <label for="path">Path</label>
+      <input type="text" id="path" v-model="excercise.path" />
+    </div>
 
     <button type="submit">Add Excercise</button>
   </form>
