@@ -5,12 +5,12 @@ import AddStudentForm from '../components/AddStudentForm.vue'
 
 <template>
   <div>
-    <h1>Add Student</h1>
+    <h1>Students</h1>
 
+    <h2>Add</h2>
     <add-student-form />
 
-    <h2>Students</h2>
-
+    <h2>List All</h2>
     <students-list />
   </div>
 </template>

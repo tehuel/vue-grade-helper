@@ -5,10 +5,12 @@ import AddExcerciseForm from '../components/AddExcerciseForm.vue'
 
 <template>
   <div>
-    <h1>Add Excercise</h1>
+    <h1>Excercises</h1>
+
+    <h2>Add</h2>
     <add-excercise-form />
 
-    <h2>Excercises</h2>
+    <h2>List All</h2>
     <excercises-list />
   </div>
 </template>

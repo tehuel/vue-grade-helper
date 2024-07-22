@@ -19,10 +19,7 @@ const { list: excercisesList } = storeToRefs(useExcercisesStore())
     <h2>Matrix</h2>
     <grades-students-matrix />
 
-    <h2>All</h2>
-    <pre>{{ gradesList }}</pre>
-
-    <h2>Per Student</h2>
+    <h2>Show Per Student</h2>
     <ul>
       <li v-for="st in studentsList" :key="st">
         <p>{{ st.firstName }}</p>
@@ -30,12 +27,15 @@ const { list: excercisesList } = storeToRefs(useExcercisesStore())
       </li>
     </ul>
 
-    <h2>Per Excercise</h2>
+    <h2>Show Per Excercise</h2>
     <ul>
       <li v-for="ex in excercisesList" :key="ex">
         <p>{{ ex.title }}</p>
         <pre>{{ getGradesForExcercise(ex.path) }}</pre>
       </li>
     </ul>
+
+    <h2>List All</h2>
+    <pre>{{ gradesList }}</pre>
   </div>
 </template>
