@@ -4,12 +4,12 @@ import GradesStudentsMatrix from '../components/GradesStudentsMatrix.vue'
 import { storeToRefs } from 'pinia'
 import { useGradesStore } from '../stores/grades'
 import { useStudentsStore } from '../stores/students'
-import { useExcercisesStore } from '../stores/excercises'
+import { useExercisesStore } from '../stores/exercises'
 
 const gradesStore = useGradesStore()
-const { list: gradesList, getGradesForStudent, getGradesForExcercise } = storeToRefs(gradesStore)
+const { list: gradesList, getGradesForStudent, getGradesForExercise } = storeToRefs(gradesStore)
 const { list: studentsList } = storeToRefs(useStudentsStore())
-const { list: excercisesList } = storeToRefs(useExcercisesStore())
+const { list: exercisesList } = storeToRefs(useExercisesStore())
 </script>
 
 <template>
@@ -27,11 +27,11 @@ const { list: excercisesList } = storeToRefs(useExcercisesStore())
       </li>
     </ul>
 
-    <h2>Show Per Excercise</h2>
+    <h2>Show Per Exercise</h2>
     <ul>
-      <li v-for="ex in excercisesList" :key="ex">
+      <li v-for="ex in exercisesList" :key="ex">
         <p>{{ ex.title }}</p>
-        <pre>{{ getGradesForExcercise(ex.path) }}</pre>
+        <pre>{{ getGradesForExercise(ex.path) }}</pre>
       </li>
     </ul>
 
