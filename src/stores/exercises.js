@@ -13,9 +13,9 @@ const createMockExercise = (exerciseId) => {
 export const useExercisesStore = defineStore('exercises', () => {
   const list = ref([createMockExercise(1), createMockExercise(2), createMockExercise(3)])
 
-  function addExercise(excercise) {
-    list.value.push(excercise)
+  function addExercise(exercise) {
+    list.value.push(exercise)
   }
 
-  return { list, addExcercise: addExercise }
+  return { list, addExercise }
 })

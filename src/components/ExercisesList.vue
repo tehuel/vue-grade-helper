@@ -2,13 +2,13 @@
 import { storeToRefs } from 'pinia'
 import { useExercisesStore } from '../stores/exercises'
 
-const excercisesStore = useExercisesStore()
-const { list: excercises } = storeToRefs(excercisesStore)
+const exercisesStore = useExercisesStore()
+const { list: exercises } = storeToRefs(exercisesStore)
 </script>
 
 <template>
   <ul class="exercisesList">
-    <li v-for="ex in excercises" :key="`${ex.title}${ex.path}`">
+    <li v-for="ex in exercises" :key="`${ex.title}${ex.path}`">
       <pre>{{ ex }}</pre>
     </li>
   </ul>

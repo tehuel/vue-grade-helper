@@ -12,7 +12,7 @@ import { RouterLink } from 'vue-router'
         <RouterLink to="/students">Students</RouterLink>
       </li>
       <li>
-        <RouterLink to="/excercises">Excercises</RouterLink>
+        <RouterLink to="/exercises">Exercises</RouterLink>
       </li>
       <li>
         <RouterLink to="/grades">Grades</RouterLink>
