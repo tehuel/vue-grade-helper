@@ -15,9 +15,9 @@ function handleRemove(exerciseId) {
 
 <template>
   <ul class="exercisesList">
-    <li v-for="ex in exercises" :key="`${ex.title}${ex.path}`">
+    <li v-for="ex in exercises" :key="ex">
       <pre>{{ ex }}</pre>
-      <button @click="handleRemove(ex.path)">x</button>
+      <button @click="handleRemove(ex.id)">x</button>
     </li>
   </ul>
 </template>

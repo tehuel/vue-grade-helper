@@ -15,9 +15,9 @@ function handleRemove(studentId) {
 
 <template>
   <ul class="studentsList">
-    <li v-for="st in students" :key="`${st.firstName}${st.lastName}`">
+    <li v-for="st in students" :key="st">
       <pre>{{ st }}</pre>
-      <button @click="handleRemove(st.firstName)">x</button>
+      <button @click="handleRemove(st.id)">x</button>
     </li>
   </ul>
 </template>

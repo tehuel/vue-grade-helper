@@ -14,11 +14,11 @@ export const useGradesStore = defineStore('grades', () => {
   }
 
   function removeGradesForStudent(studentId) {
-    list.value = list.value.filter((gr) => gr.studentId !== studentId)
+    list.value = list.value.filter((gradeRecord) => gradeRecord.studentId !== studentId)
   }
 
   function removeGradesForExercise(exerciseId) {
-    list.value = list.value.filter((gr) => gr.exerciseId !== exerciseId)
+    list.value = list.value.filter((gradeRecord) => gradeRecord.exerciseId !== exerciseId)
   }
 
   const getAllGradesForStudent = computed(() => {

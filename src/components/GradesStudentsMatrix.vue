@@ -24,9 +24,9 @@ const { list: exercisesList } = storeToRefs(useExercisesStore())
         <tr v-for="st in studentsList" :key="st">
           <th scope="row">{{ st.firstName }}</th>
           <td v-for="ex in exercisesList" :key="{ ...ex, ...st }">
-            <add-grade-form :studentId="st.firstName" :exerciseId="ex.path" />
+            <add-grade-form :studentId="st.id" :exerciseId="ex.id" />
             <hr>
-            <pre>Grade: {{ getGradeForStudentAndExercise(st.firstName, ex.path) }}</pre>
+            <pre>Grade: {{ getGradeForStudentAndExercise(st.id, ex.id) }}</pre>
           </td>
         </tr>
       </tbody>
