@@ -17,5 +17,9 @@ export const useExercisesStore = defineStore('exercises', () => {
     list.value.push(exercise)
   }
 
-  return { list, addExercise }
+  function removeExercise(exerciseId) {
+    list.value = list.value.filter((ex) => ex.path !== exerciseId)
+  }
+
+  return { list, addExercise, removeExercise }
 })

@@ -18,5 +18,9 @@ export const useStudentsStore = defineStore('students', () => {
     list.value.push(student)
   }
 
-  return { list, addStudent }
+  function removeStudent(studentId) {
+    list.value = list.value.filter((st) => st.firstName !== studentId)
+  }
+
+  return { list, addStudent, removeStudent }
 })
