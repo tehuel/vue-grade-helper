@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useExercisesStore } from '../stores/exercises'
+import { useExercisesStore } from '@/stores/exercises'
 
 const EMPTY_EXERCISE = {
   title: '',

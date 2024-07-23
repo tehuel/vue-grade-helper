@@ -2,9 +2,9 @@
 import GradesStudentsMatrix from '../components/GradesStudentsMatrix.vue'
 
 import { storeToRefs } from 'pinia'
-import { useGradesStore } from '../stores/grades'
-import { useStudentsStore } from '../stores/students'
-import { useExercisesStore } from '../stores/exercises'
+import { useGradesStore } from '@/stores/grades'
+import { useStudentsStore } from '@/stores/students'
+import { useExercisesStore } from '@/stores/exercises'
 
 const gradesStore = useGradesStore()
 const { list: gradesList, getGradesForStudent, getGradesForExercise } = storeToRefs(gradesStore)

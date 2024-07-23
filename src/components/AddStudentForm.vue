@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useStudentsStore } from '../stores/students'
+import { useStudentsStore } from '@/stores/students'
 
 const EMPTY_STUDENT = {
   firstName: '',

@@ -1,8 +1,8 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { useGradesStore } from '../stores/grades'
-import { useStudentsStore } from '../stores/students'
-import { useExercisesStore } from '../stores/exercises'
+import { useGradesStore } from '@/stores/grades'
+import { useStudentsStore } from '@/stores/students'
+import { useExercisesStore } from '@/stores/exercises'
 import AddGradeForm from './AddGradeForm.vue'
 
 const { getGradeForStudentAndExercise } = useGradesStore()

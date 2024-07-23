@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { useStudentsStore } from '../stores/students'
+import { useStudentsStore } from '@/stores/students'
 
 const studentsStore = useStudentsStore()
 const { list: students } = storeToRefs(studentsStore)
