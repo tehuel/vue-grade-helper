@@ -11,12 +11,14 @@ const { list: studentsList } = storeToRefs(useStudentsStore())
 const { list: exercisesList } = storeToRefs(useExercisesStore())
 
 const appliedFiltersForStudentsList = ref(new Set());
-const appliedFiltersForExercicesList = ref([]);
-
-const filteredExercisesList = ref([...exercisesList.value]);
+const appliedFiltersForExercicesList = ref(new Set());
 
 function isStudentInFilter(studentId) {
   return appliedFiltersForStudentsList.value.has(studentId);
+}
+
+function isExerciseInFilter(exerciseId) {
+  return appliedFiltersForExercicesList.value.has(exerciseId);
 }
 
 function applyStudentsListFilter(studentId) {
@@ -26,6 +28,15 @@ function applyStudentsListFilter(studentId) {
     appliedFiltersForStudentsList.value.add(studentId);
   }
 }
+
+function applyExercicesListFilter(exerciseId) {
+  if (isExerciseInFilter(exerciseId)) {
+    appliedFiltersForExercicesList.value.delete(exerciseId)
+  } else {
+    appliedFiltersForExercicesList.value.add(exerciseId);
+  }
+}
+
 const filteredStudentsList = () => {
   return studentsList.value.filter(st => {
     if (!appliedFiltersForStudentsList.value.size) {
@@ -35,10 +46,14 @@ const filteredStudentsList = () => {
   })
 };
 
-function applyExercicesListFilter(exercise) {
-  console.log("applyExercicesListFilter", exercise)
+const filteredExercisesList = () => {
+  return exercisesList.value.filter(ex => {
+    if (!appliedFiltersForExercicesList.value.size) {
+      return true
+    }
+    return isExerciseInFilter(ex.id);
+  })
 }
-
 </script>
 
 <template>
@@ -47,9 +62,9 @@ function applyExercicesListFilter(exercise) {
       <thead>
         <tr>
           <th scope="col">Student</th>
-          <th scope="col" v-for="ex in exercisesList" :key="ex">
+          <th scope="col" v-for="ex in filteredExercisesList()" :key="ex">
             {{ ex.path }}
-            <button @click="applyExercicesListFilter(ex)" style="padding: 0; font-size: 0.8em;">filter</button>
+            <button @click="applyExercicesListFilter(ex.id)" style="padding: 0; font-size: 0.8em;">filter</button>
           </th>
         </tr>
       </thead>
@@ -61,7 +76,7 @@ function applyExercicesListFilter(exercise) {
               {{ isStudentInFilter(st.id) ? 'show all' : 'solo' }}
             </button>
           </th>
-          <td v-for="ex in exercisesList" :key="{ ...ex, ...st }">
+          <td v-for="ex in filteredExercisesList()" :key="{ ...ex, ...st }">
             <add-grade-form :studentId="st.id" :exerciseId="ex.id" />
             <hr>
             <pre>Grade: {{ getGradeForStudentAndExercise(st.id, ex.id) }}</pre>
