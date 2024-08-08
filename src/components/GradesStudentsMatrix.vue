@@ -1,60 +1,14 @@
 <script setup>
-import { storeToRefs } from 'pinia'
 import { useGradesStore } from '@/stores/grades'
-import { useStudentsStore } from '@/stores/students'
-import { useExercisesStore } from '@/stores/exercises'
+import { useFilteredStudentsStore } from '@/stores/filteredStudents'
+import { useFilteredExercisesStore } from '@/stores/filteredExercises'
 import AddGradeForm from './grades/AddGradeForm.vue'
 import CheckOnlineStatus from './CheckOnlineStatus.vue'
-import { ref } from 'vue'
 
 const { getGradeForStudentAndExercise } = useGradesStore()
-const { list: studentsList } = storeToRefs(useStudentsStore())
-const { list: exercisesList } = storeToRefs(useExercisesStore())
-
-const appliedFiltersForStudentsList = ref(new Set());
-const appliedFiltersForExercicesList = ref(new Set());
-
-function isStudentInFilter(studentId) {
-  return appliedFiltersForStudentsList.value.has(studentId);
-}
-
-function isExerciseInFilter(exerciseId) {
-  return appliedFiltersForExercicesList.value.has(exerciseId);
-}
-
-function applyStudentsListFilter(studentId) {
-  if (isStudentInFilter(studentId)) {
-    appliedFiltersForStudentsList.value.delete(studentId)
-  } else {
-    appliedFiltersForStudentsList.value.add(studentId);
-  }
-}
-
-function applyExercicesListFilter(exerciseId) {
-  if (isExerciseInFilter(exerciseId)) {
-    appliedFiltersForExercicesList.value.delete(exerciseId)
-  } else {
-    appliedFiltersForExercicesList.value.add(exerciseId);
-  }
-}
-
-const filteredStudentsList = () => {
-  return studentsList.value.filter(st => {
-    if (!appliedFiltersForStudentsList.value.size) {
-      return true
-    }
-    return isStudentInFilter(st.id);
-  })
-};
-
-const filteredExercisesList = () => {
-  return exercisesList.value.filter(ex => {
-    if (!appliedFiltersForExercicesList.value.size) {
-      return true
-    }
-    return isExerciseInFilter(ex.id);
-  })
-}
+const { applyStudentsListFilter, filteredStudentsList, isStudentInFilter } =
+  useFilteredStudentsStore()
+const { applyExercisesListFilter, filteredExercisesList } = useFilteredExercisesStore()
 </script>
 
 <template>
@@ -65,7 +19,9 @@ const filteredExercisesList = () => {
           <th scope="col">Student</th>
           <th scope="col" v-for="ex in filteredExercisesList()" :key="ex">
             {{ ex.path }}
-            <button @click="applyExercicesListFilter(ex.id)" style="padding: 0; font-size: 0.8em;">filter</button>
+            <button @click="applyExercisesListFilter(ex.id)" style="padding: 0; font-size: 0.8em">
+              filter
+            </button>
           </th>
         </tr>
       </thead>
@@ -73,14 +29,14 @@ const filteredExercisesList = () => {
         <tr v-for="st in filteredStudentsList()" :key="st">
           <th scope="row">
             {{ st.firstName }}
-            <button @click="applyStudentsListFilter(st.id)" style="padding: 0; font-size: 0.8em;">
+            <button @click="applyStudentsListFilter(st.id)" style="padding: 0; font-size: 0.8em">
               {{ isStudentInFilter(st.id) ? 'show all' : 'solo' }}
             </button>
           </th>
           <td v-for="ex in filteredExercisesList()" :key="{ ...ex, ...st }">
             <check-online-status :student="st" :exercise="ex" />
             <add-grade-form :studentId="st.id" :exerciseId="ex.id" />
-            <hr>
+            <hr />
             <pre>Grade: {{ getGradeForStudentAndExercise(st.id, ex.id) }}</pre>
           </td>
         </tr>
