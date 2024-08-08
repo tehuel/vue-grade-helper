@@ -1,25 +1,16 @@
 import { ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
-import { randomString } from '@/utils/functions'
 import { v4 as uuid } from 'uuid'
+import { createMockExercise } from '@/utils/functions'
 
-const createMockExercise = (exerciseId) => {
-  const title = exerciseId.toString() || randomString()
-  return {
-    id: uuid(),
-    title: `Ejercicio ${title.toUpperCase()}`,
-    path: `tp-${title}`
-  }
-}
-
-const getDefaultValues = () => {
+const getInitialValues = () => {
   const defaultValues = [createMockExercise(1), createMockExercise(2), createMockExercise(3)]
   return useStorage('exercises', defaultValues)
 }
 
 export const useExercisesStore = defineStore('exercises', () => {
-  const list = ref(getDefaultValues())
+  const list = ref(getInitialValues())
 
   function addExercise(exercise) {
     list.value.push({

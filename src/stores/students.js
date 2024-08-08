@@ -1,20 +1,10 @@
 import { ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
-import { randomString } from '@/utils/functions'
 import { v4 as uuid } from 'uuid'
+import { createMockStudent } from '@/utils/functions'
 
-const createMockStudent = (studentId) => {
-  const name = studentId || randomString()
-  return {
-    id: uuid(),
-    firstName: name,
-    lastName: randomString(),
-    githubUsername: randomString()
-  }
-}
-
-const getDefaultValues = () => {
+const getInitialValues = () => {
   const defaultValues = [
     createMockStudent('Ana'),
     createMockStudent('Beto'),
@@ -24,7 +14,7 @@ const getDefaultValues = () => {
 }
 
 export const useStudentsStore = defineStore('students', () => {
-  const list = ref(getDefaultValues())
+  const list = ref(getInitialValues())
 
   function addStudent(student) {
     list.value.push({
