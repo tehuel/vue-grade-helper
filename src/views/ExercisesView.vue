@@ -1,6 +1,6 @@
 <script setup>
-import ExercisesList from '../components/ExercisesList.vue'
-import AddExerciseForm from '../components/AddExerciseForm.vue'
+import ExercisesList from '../components/exercices/ExercisesList.vue'
+import AddExerciseForm from '../components/exercices/AddExerciseForm.vue'
 </script>
 
 <template>

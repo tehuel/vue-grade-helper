@@ -1,6 +1,6 @@
 <script setup>
-import StudentsList from '../components/StudentsList.vue'
-import AddStudentForm from '../components/AddStudentForm.vue'
+import StudentsList from '../components/student/StudentsList.vue'
+import AddStudentForm from '../components/student/AddStudentForm.vue'
 </script>
 
 <template>
