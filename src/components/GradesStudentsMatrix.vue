@@ -59,7 +59,7 @@ const filteredExercisesList = () => {
 
 <template>
   <div class="overflow-auto">
-    <table>
+    <table class="striped">
       <thead>
         <tr>
           <th scope="col">Student</th>
@@ -88,13 +88,3 @@ const filteredExercisesList = () => {
     </table>
   </div>
 </template>
-
-<style>
-table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 3px;
-}
-</style>
