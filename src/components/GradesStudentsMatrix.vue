@@ -4,7 +4,8 @@ import { useGradesStore } from '@/stores/grades'
 import { useStudentsStore } from '@/stores/students'
 import { useExercisesStore } from '@/stores/exercises'
 import AddGradeForm from './AddGradeForm.vue'
-import { ref, onMounted } from 'vue'
+import CheckOnlineStatus from './CheckOnlineStatus.vue'
+import { ref } from 'vue'
 
 const { getGradeForStudentAndExercise } = useGradesStore()
 const { list: studentsList } = storeToRefs(useStudentsStore())
@@ -54,39 +55,6 @@ const filteredExercisesList = () => {
     return isExerciseInFilter(ex.id);
   })
 }
-
-const fetchStatus = (address) => {
-  return new Promise((resolve, reject) => {
-    let client = new XMLHttpRequest();
-    client.onreadystatechange = function () {
-      if (this.readyState == 4) {
-        if (this.status == 200) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      }
-    }
-    client.open("HEAD", address);
-    client.send();
-  });
-}
-
-const onlineStatuses = ref({});
-
-const checkOnlineStatus = async (studentId, exercisePath) => {
-  const address = `https://${studentId}.github.io/plataformas-moviles-entregas/${exercisePath}`;
-  const isOnline = await fetchStatus(address);
-  onlineStatuses.value[address] = isOnline;
-};
-
-onMounted(() => {
-  studentsList.value.forEach(student => {
-    exercisesList.value.forEach(exercise => {
-      checkOnlineStatus(student.githubUsername, exercise.path);
-    });
-  });
-});
 </script>
 
 <template>
@@ -110,10 +78,7 @@ onMounted(() => {
             </button>
           </th>
           <td v-for="ex in filteredExercisesList()" :key="{ ...ex, ...st }">
-            <span v-if="onlineStatuses[`https://${st.githubUsername}.github.io/plataformas-moviles-entregas/${ex.path}`] === true"> (Online)</span>
-            <span v-else-if="onlineStatuses[`https://${st.githubUsername}.github.io/plataformas-moviles-entregas/${ex.path}`] === false"> (Offline)</span>
-            <span v-else> (Checking...)</span>
-            <a :href="`https://${st.githubUsername}.github.io/plataformas-moviles-entregas/${ex.path}`">Link</a>
+            <check-online-status :student="st" :exercise="ex" />
             <add-grade-form :studentId="st.id" :exerciseId="ex.id" />
             <hr>
             <pre>Grade: {{ getGradeForStudentAndExercise(st.id, ex.id) }}</pre>
