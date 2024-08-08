@@ -26,4 +26,3 @@ export const createMockExercise = (exerciseId) => {
     path: `tp-${title}`
   }
 }
-

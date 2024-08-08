@@ -1,15 +1,15 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useStudentsStore } from '@/stores/students'
-import { useGradesStore } from '@/stores/grades';
+import { useGradesStore } from '@/stores/grades'
 
 const studentsStore = useStudentsStore()
 const gradesStore = useGradesStore()
 const { list: students } = storeToRefs(studentsStore)
 
 function handleRemove(studentId) {
-  studentsStore.removeStudent(studentId);
-  gradesStore.removeGradesForStudent(studentId);
+  studentsStore.removeStudent(studentId)
+  gradesStore.removeGradesForStudent(studentId)
 }
 </script>
 

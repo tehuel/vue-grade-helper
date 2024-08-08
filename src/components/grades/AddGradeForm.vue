@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useGradesStore } from '@/stores/grades';
+import { useGradesStore } from '@/stores/grades'
 
 const { studentId, exerciseId } = defineProps(['studentId', 'exerciseId'])
 
@@ -14,17 +14,12 @@ const EMPTY_GRADE = {
 const grade = ref({ ...EMPTY_GRADE })
 
 function handleSubmit() {
-  addGrade(
-    studentId,
-    exerciseId,
-    { ...grade.value }
-  )
+  addGrade(studentId, exerciseId, { ...grade.value })
   // reset current grade
   grade.value = { ...EMPTY_GRADE }
 }
 
-const uniqueName = `${studentId}-${exerciseId}`.toLocaleLowerCase();
-
+const uniqueName = `${studentId}-${exerciseId}`.toLocaleLowerCase()
 </script>
 
 <template>

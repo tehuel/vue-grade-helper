@@ -1,15 +1,15 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useExercisesStore } from '@/stores/exercises'
-import { useGradesStore } from '@/stores/grades';
+import { useGradesStore } from '@/stores/grades'
 
 const exercisesStore = useExercisesStore()
 const gradesStore = useGradesStore()
 const { list: exercises } = storeToRefs(exercisesStore)
 
 function handleRemove(exerciseId) {
-  exercisesStore.removeExercise(exerciseId);
-  gradesStore.removeGradesForExercise(exerciseId);
+  exercisesStore.removeExercise(exerciseId)
+  gradesStore.removeGradesForExercise(exerciseId)
 }
 </script>
 
