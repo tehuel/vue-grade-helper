@@ -20,3 +20,10 @@ import { RouterLink } from 'vue-router'
     </ul>
   </nav>
 </template>
+
+<style scoped>
+nav {
+  border-bottom: 1px solid var(--pico-primary);
+  margin-bottom: var(--pico-spacing);
+}
+</style>
