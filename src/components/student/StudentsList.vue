@@ -2,6 +2,8 @@
 import { storeToRefs } from 'pinia'
 import { useStudentsStore } from '@/stores/students'
 import { useGradesStore } from '@/stores/grades'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const studentsStore = useStudentsStore()
 const gradesStore = useGradesStore()
@@ -17,7 +19,7 @@ function handleRemove(studentId) {
   <ul class="studentsList">
     <li v-for="st in students" :key="st">
       <pre>{{ st }}</pre>
-      <button @click="handleRemove(st.id)">x</button>
+      <button @click="handleRemove(st.id)" :title="t('Delete')">x</button>
     </li>
   </ul>
 </template>

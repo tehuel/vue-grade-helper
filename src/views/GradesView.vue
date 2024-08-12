@@ -1,4 +1,7 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 import GradesStudentsMatrix from '../components/GradesStudentsMatrix.vue'
 
 import { storeToRefs } from 'pinia'
@@ -14,12 +17,12 @@ const { list: exercisesList } = storeToRefs(useExercisesStore())
 
 <template>
   <div>
-    <h1>Grades</h1>
+    <h1>{{ t('Grades') }}</h1>
 
-    <h2>Matrix</h2>
+    <h2>{{ t('Matrix') }}</h2>
     <grades-students-matrix />
 
-    <h2>Show Per Student</h2>
+    <h2>{{ t('Show Per Student') }}</h2>
     <ul>
       <li v-for="st in studentsList" :key="st">
         <p>{{ st.firstName }}</p>
@@ -27,7 +30,7 @@ const { list: exercisesList } = storeToRefs(useExercisesStore())
       </li>
     </ul>
 
-    <h2>Show Per Exercise</h2>
+    <h2>{{ t('Show Per Exercise') }}</h2>
     <ul>
       <li v-for="ex in exercisesList" :key="ex">
         <p>{{ ex.title }}</p>
@@ -35,7 +38,7 @@ const { list: exercisesList } = storeToRefs(useExercisesStore())
       </li>
     </ul>
 
-    <h2>List All Grades</h2>
+    <h2>{{ t('List All') }}</h2>
     <pre>{{ gradesList }}</pre>
   </div>
 </template>
