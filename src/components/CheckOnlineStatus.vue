@@ -27,9 +27,9 @@ onMounted(() => {
 
 <template>
   <div>
-    <span v-if="onlineStatus === true"> (Online)</span>
-    <span v-else-if="onlineStatus === false"> (Offline)</span>
-    <span v-else> (Checking...)</span>
-    <a :href="getAddress()" target="_blank">Link</a>
+    <span v-if="onlineStatus === true"><i class="ri-checkbox-circle-line" style="color: green"></i></span>
+    <span v-else-if="onlineStatus === false"><i class="ri-question-line" style="color:cornflowerblue"></i></span>
+    <span v-else><i class="ri-more-line"></i></span>
+    <a :href="getAddress()" target="_blank" style="margin-inline: 5px;">Link</a>
   </div>
 </template>
