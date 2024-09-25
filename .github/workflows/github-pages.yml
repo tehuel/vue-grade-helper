@@ -39,7 +39,7 @@ jobs:
       - name: Build (Preview)
         if: github.ref != 'refs/heads/main'
         env:
-          BASE_URL: ${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
+          BASE_URL: ${{ env.PAGES_BASE_URL }}${{ env.PR_PATH }}
         run: npm run build --base=${{ env.BASE_URL }}
 
       - name: Copy Index to 404
