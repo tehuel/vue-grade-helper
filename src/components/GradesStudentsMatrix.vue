@@ -26,7 +26,7 @@ const showDetails = (studentId, exerciseId) => {
         <tr>
           <th scope="col">Student</th>
           <th scope="col" v-for="ex in filteredExercisesList()" :key="ex">
-            {{ ex.path }}
+            <i @click="applyExercisesListFilter(ex.id)" style="cursor: pointer">{{ ex.path }}</i>
           </th>
         </tr>
       </thead>
@@ -43,11 +43,13 @@ const showDetails = (studentId, exerciseId) => {
             <add-grade-form :studentId="st.id" :exerciseId="ex.id" v-if="showGrader"/> 
           </td>
         </tr>
-
-
       </tbody>
-
     </table>
-
   </div>
 </template>
+
+<style>
+  td {
+    min-width: 200px;
+  }
+</style>
