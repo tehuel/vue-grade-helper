@@ -1,0 +1,22 @@
+name: Delete Preview (PR Close)
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete_preview:
+    runs-on: ubuntu-latest
+    
+    env:
+      PR_PATH: pull/${{github.event.number}}
+    
+    steps:
+      - name: make empty dir
+        run: mkdir dist
+
+      - name: delete folder
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: ${{ env.PR_PATH }}
