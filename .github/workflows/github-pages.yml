@@ -14,7 +14,7 @@ jobs:
       cancel-in-progress: true
 
     env:
-      PAGES_BASE_URL: https://tehuel.github.io/vue-grade-helper/
+      PAGES_BASE_URL: vue-grade-helper
       PR_PATH: preview/${{github.event.number}}
 
     steps:
@@ -32,15 +32,11 @@ jobs:
 
       - name: Build (Prod)
         if: github.ref == 'refs/heads/main'
-        env:
-          BASE_URL: ${{ env.PAGES_BASE_URL }}
         run: npm run build
 
       - name: Build (Preview)
         if: github.ref != 'refs/heads/main'
-        env:
-          BASE_URL: ${{ env.PAGES_BASE_URL }}${{ env.PR_PATH }}
-        run: npm run build -- --base=${{ env.BASE_URL }}
+        run: npm run build -- --base=${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
 
       - name: Copy Index to 404
         run: cp ./dist/index.html ./dist/404.html
