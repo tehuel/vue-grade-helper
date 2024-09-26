@@ -6,7 +6,9 @@ on:
 jobs:
   delete_preview:
     runs-on: ubuntu-latest
-    
+    permissions:
+      pull-requests: write    
+
     env:
       PR_PATH: pull/${{github.event.number}}
     
