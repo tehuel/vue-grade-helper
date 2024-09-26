@@ -14,6 +14,29 @@ function handleRemove(studentId) {
 </script>
 
 <template>
+  <div class="overflow-auto">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Student</th>
+          <th scope="col">Repository</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="st in students" :key="st">
+          <th scope="row">
+            <b>{{ st.lastName + " " + st.firstName }}</b>
+          </th>
+          <td>
+            <a v-bind:href="'https://github.com/' + st.githubUsername + '/plataformas-moviles-entregas/'">
+              {{ st.githubUsername }}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <ul class="studentsList">
     <li v-for="st in students" :key="st">
       <pre>{{ st }}</pre>
