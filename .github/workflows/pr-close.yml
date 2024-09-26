@@ -20,3 +20,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           destination_dir: ${{ env.PR_PATH }}
+
+      - name: Comment Deleted Preview URL
+        uses: hasura/comment-progress@v2.3.0
+        if: github.ref != 'refs/heads/main'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          recreate: true
+          message: "PR Closed. Preview Deleted. https://${{ env.GITHUB_REPOSITORY_OWNER }}.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}"
