@@ -65,4 +65,8 @@ jobs:
           repository: ${{ github.repository }}
           number: ${{ github.event.number }}
           id: deploy-preview
-          message: Preview Deployed https://${{ env.GITHUB_REPOSITORY_OWNER }}.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
+          recreate: true
+          message: |
+            Preview Deployed.
+
+            https://tehuel.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
