@@ -32,4 +32,7 @@ jobs:
           number: ${{ github.event.number }}
           id: deploy-preview
           recreate: true
-          message: "PR Closed. Preview Deleted. https://${{ env.GITHUB_REPOSITORY_OWNER }}.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}"
+          message: |
+            PR Closed. Preview Deleted.
+            
+            https://tehuel.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
