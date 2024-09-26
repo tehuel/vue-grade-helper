@@ -1,0 +1,38 @@
+name: Delete Preview (PR Close)
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete_preview:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write    
+
+    env:
+      PR_PATH: pull/${{github.event.number}}
+    
+    steps:
+      - name: make empty dir
+        run: mkdir dist
+
+      - name: delete folder
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: ${{ env.PR_PATH }}
+
+      - name: Comment Deleted Preview URL
+        uses: hasura/comment-progress@v2.3.0
+        if: github.ref != 'refs/heads/main'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          recreate: true
+          message: |
+            PR Closed. Preview Deleted.
+            
+            https://tehuel.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}

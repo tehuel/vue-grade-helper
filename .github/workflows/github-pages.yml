@@ -1,54 +1,72 @@
-name: CI
-
+name: Deploy Github Pages
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: 'pages'
+      cancel-in-progress: true
+
+    env:
+      PAGES_BASE_URL: vue-grade-helper
+      PR_PATH: preview/${{github.event.number}}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
+
       - name: Install dependencies
         run: npm ci
-      - name: Build
+
+      - name: Build (Prod)
+        if: github.ref == 'refs/heads/main'
         run: npm run build
+
+      - name: Build (Preview)
+        if: github.ref != 'refs/heads/main'
+        run: npm run build -- --base=${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
+
       - name: Copy Index to 404
         run: cp ./dist/index.html ./dist/404.html
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy (Prod)
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
         with:
-          # Upload dist folder
-          path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+      - name: Deploy (Preview)
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref != 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: ${{ env.PR_PATH }}
+
+      - name: Comment Preview URL
+        uses: hasura/comment-progress@v2.3.0
+        if: github.ref != 'refs/heads/main'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          recreate: true
+          message: |
+            Preview Deployed.
+
+            https://tehuel.github.io/${{ env.PAGES_BASE_URL }}/${{ env.PR_PATH }}
