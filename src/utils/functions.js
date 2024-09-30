@@ -26,3 +26,12 @@ export const createMockExercise = (exerciseId) => {
     path: `tp-${title}`
   }
 }
+
+export const createMockCourse = (courseId) => {
+  const title = courseId.toString() || randomString()
+  return {
+    id: uuid(),
+    title: title,
+    school_year: new Date().getFullYear()
+  }
+}
