@@ -13,7 +13,11 @@ const gradesStore = useGradesStore();
 
 const studentId = route.params.id;
 const student = studentsStore.list.find((s) => s.id === studentId);
+student.repositoryUrl = 'https://github.com/' + student.githubUsername + '/plataformas-moviles-entregas'
+student.pagesUrl = 'https://' + student.githubUsername + '.github.io/plataformas-moviles-entregas/'
+
 const { list: exercises } = storeToRefs(exercisesStore);
+
 const avatarUrl = ref('');
 
 const fetchGithubProfilePicture = async () => {
@@ -45,9 +49,9 @@ onMounted(fetchGithubProfilePicture);
           <p>{{ student.firstName + " " + student.lastName }}</p>
           <p><i>@{{ student.githubUsername }}</i></p>
           <p>
-            <a v-bind:href="'https://github.com/' + student.githubUsername + '/plataformas-moviles-entregas'">Repo</a>
+            <a v-bind:href="student.repositoryUrl">Repo</a>
             |
-            <a v-bind:href="'https://' + student.githubUsername + '.github.io/plataformas-moviles-entregas/'">Pages</a>
+            <a v-bind:href="student.pagesUrl">Pages</a>
           </p>
         </figcaption>
       </figure>
