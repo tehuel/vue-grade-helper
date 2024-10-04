@@ -34,7 +34,7 @@ function handleRemove(studentId) {
             </a>
           </td>
           <td>
-            <a v-bind:href="'./students/' + st.id">Details</a>
+            <router-link :to="{ name: 'student', params: { id: st.id} }">Details</router-link>
           </td>
         </tr>
       </tbody>
