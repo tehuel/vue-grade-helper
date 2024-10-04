@@ -20,6 +20,7 @@ function handleRemove(studentId) {
         <tr>
           <th scope="col">Student</th>
           <th scope="col">Repository</th>
+          <th scope="col">Profile</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +32,9 @@ function handleRemove(studentId) {
             <a v-bind:href="'https://github.com/' + st.githubUsername + '/plataformas-moviles-entregas/'">
               {{ st.githubUsername }}
             </a>
+          </td>
+          <td>
+            <router-link :to="{ name: 'student', params: { id: st.id} }">Details</router-link>
           </td>
         </tr>
       </tbody>
