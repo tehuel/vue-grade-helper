@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import StudentsView from '../views/StudentsView.vue'
 import ExercisesView from '../views/ExercisesView.vue'
 import GradesView from '../views/GradesView.vue'
-import CoursesView from '@/views/CoursesView.vue'
+import CoursesView from '../views/CoursesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
