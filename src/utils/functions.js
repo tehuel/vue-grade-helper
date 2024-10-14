@@ -26,3 +26,26 @@ export const createMockExercise = (exerciseId) => {
     path: `tp-${title}`
   }
 }
+
+export const apiRequest = async (endpoint, requestMethod) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/${endpoint}`, {
+      method: requestMethod,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('githubToken')
+      }
+    })
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Request failed');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Request failed:', error);
+    throw error;
+  }
+}
