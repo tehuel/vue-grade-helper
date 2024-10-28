@@ -24,6 +24,9 @@ const authStore = useAuthStore();
       <li>
         <RouterLink to="/grades">Grades</RouterLink>
       </li>
+      <li>
+        <button @click="authStore.logout"><i class="ri-logout-box-line"></i> Logout</button>
+      </li>
     </ul>
     <ul v-else>
       <li>
@@ -37,5 +40,9 @@ const authStore = useAuthStore();
 nav {
   border-bottom: 1px solid var(--pico-primary);
   margin-bottom: var(--pico-spacing);
+}
+
+.logout {
+  margin-left: auto;
 }
 </style>
