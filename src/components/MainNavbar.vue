@@ -1,10 +1,14 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useAuthStore } from '@/stores/auth';
+import SignInButton from './SignInButton.vue';
+
+const authStore = useAuthStore();
 </script>
 
 <template>
   <nav>
-    <ul>
+    <ul v-if="authStore.isAuthenticated">
       <li>
         <RouterLink to="/">Home</RouterLink>
       </li>
@@ -19,6 +23,11 @@ import { RouterLink } from 'vue-router'
       </li>
       <li>
         <RouterLink to="/grades">Grades</RouterLink>
+      </li>
+    </ul>
+    <ul v-else>
+      <li>
+        <SignInButton />
       </li>
     </ul>
   </nav>
