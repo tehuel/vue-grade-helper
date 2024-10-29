@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { useCoursesStore } from '@/stores/courses';
 
 const EMPTY_COURSE = {
-  title: '',
-  school_year: ''
+  name: '',
+  school_year: new Date().getFullYear()
 }
 
 const { addCourse } = useCoursesStore()
@@ -23,13 +23,13 @@ function onSubmit() {
   <form @submit.prevent="onSubmit">
     <div class="grid">
       <div>
-        <label for="title">Title</label>
-        <input type="text" id="title" v-model="course.title" />
+        <label for="name">Name</label>
+        <input type="text" id="name" v-model="course.name" />
       </div>
 
       <div>
         <label for="school_year">School year</label>
-        <input type="text" id="school_year" v-model="course.school_year" :placeholder="new Date().getFullYear()" />
+        <input type="text" id="school_year" v-model="course.school_year" />
       </div>
     </div>
 
