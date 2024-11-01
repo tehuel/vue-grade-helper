@@ -1,0 +1,21 @@
+name: Stackblitz Comment
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  stackblitz-comment:
+    runs-on: ubuntu-latest
+    name: Add Stackblitz Comment
+    steps:
+      - name: comment on the pull request
+        uses: hasura/comment-progress@v2.3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: "tehuel/vue-grade-helper"
+          number: ${{ github.event.number }}
+          id: stackblitz-comment
+          message: |
+            Preview Stackblitz:
+
+            https://pr.new/github.com/tehuel/vue-grade-helper/pull/${{ github.event.number }}
