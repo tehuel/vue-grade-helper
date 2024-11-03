@@ -1,30 +1,30 @@
-import { ref } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { v4 as uuid } from 'uuid'
-import { createMockCourse } from '@/utils/functions'
-
-const getInitialValues = () => {
-  const defaultValues = [
-    createMockCourse('7mo2da'),
-    createMockCourse('7mo3ra'),
-    createMockCourse('7mo4ta')
-  ]
-  return useStorage('courses', defaultValues)
-}
+import { getCourses, storeCourse, deleteCourse } from '@/services/courseService';
 
 export const useCoursesStore = defineStore('courses', () => {
-  const list = ref(getInitialValues())
+  const list = ref([])
 
-  function addCourse(course) {
-    list.value.push({
-      id: uuid(),
-      ...course
-    })
+  onMounted(async () => {
+    list.value = await getCourses();
+  })
+
+  async function addCourse(course) {
+    try {
+      const newCourse = await storeCourse(course);
+      list.value.push(newCourse);
+    } catch (error) {
+      console.error('Error adding new course:', error)
+    }
   }
 
-  function removeCourse(courseId) {
-    list.value = list.value.filter((st) => st.id !== courseId)
+  async function removeCourse(courseId) {
+    try {
+      await deleteCourse(courseId);
+      list.value = list.value.filter(course => course.id !== courseId);
+    } catch (error) {
+      console.error('Error removing course:', error);
+    }
   }
 
   return { list, addCourse, removeCourse }
