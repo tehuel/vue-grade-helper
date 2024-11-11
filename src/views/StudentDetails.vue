@@ -46,7 +46,7 @@ onMounted(fetchGithubProfilePicture);
       <figure>
         <img :src="avatarUrl" alt="Github Picture" class="student-profile">
         <figcaption>
-          <p>{{ student.firstName + " " + student.lastName }}</p>
+          <p>{{ student.first_name + " " + student.last_name }}</p>
           <p><i>@{{ student.githubUsername }}</i></p>
           <p>
             <a v-bind:href="student.repositoryUrl">Repo</a>
