@@ -22,7 +22,7 @@ const { list: exercisesList } = storeToRefs(useExercisesStore())
     <h2>Show Per Student</h2>
     <ul>
       <li v-for="st in studentsList" :key="st">
-        <p>{{ st.firstName }}</p>
+        <p>{{ st.first_name }}</p>
         <pre>{{ getGradesForStudent(st.id) }}</pre>
       </li>
     </ul>

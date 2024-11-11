@@ -2,31 +2,32 @@
 import { ref } from 'vue'
 import { useGradesStore } from '@/stores/grades'
 
-const { studentId, exerciseId } = defineProps(['studentId', 'exerciseId'])
+const { student_id, exercise_id } = defineProps(['student_id', 'exercise_id'])
 
 const { addGrade } = useGradesStore()
 
 const EMPTY_GRADE = {
-  number: '',
+  score: '',
   comment: ''
 }
 
 const grade = ref({ ...EMPTY_GRADE })
 
 function handleSubmit() {
-  addGrade(studentId, exerciseId, { ...grade.value })
+  console.log("requesting to add grade", {student_id, exercise_id, ...grade.value })
+  addGrade({student_id, exercise_id, ...grade.value })
   // reset current grade
   grade.value = { ...EMPTY_GRADE }
 }
 
-const uniqueName = `${studentId}-${exerciseId}`.toLocaleLowerCase()
+const uniqueName = `${student_id}-${exercise_id}`.toLocaleLowerCase()
 </script>
 
 <template>
   <form @submit.prevent="handleSubmit">
     <div>
-      <label :for="`${uniqueName}-number`">Grade</label>
-      <input type="number" min="1" max="10" :id="`${uniqueName}-number`" v-model="grade.number" />
+      <label :for="`${uniqueName}-score`">Grade</label>
+      <input type="number" min="1" max="10" :id="`${uniqueName}-score`" v-model="grade.score" />
     </div>
 
     <div>

@@ -9,7 +9,7 @@ import { storeToRefs } from 'pinia';
 const route = useRoute();
 const studentsStore = useStudentsStore();
 const exercisesStore = useExercisesStore();
-const gradesStore = useGradesStore();
+const { getGradeForStudentAndExercise } = useGradesStore();
 
 const studentId = route.params.id;
 const student = studentsStore.list.find((s) => s.id === studentId);
@@ -65,7 +65,7 @@ onMounted(fetchGithubProfilePicture);
       </header>
       <ul>
         <li v-for="ex in exercises" :key="ex">
-          {{ ex.title }}: {{ gradesStore.getGradeForStudentAndExercise(studentId, ex.id)?.grade?.number || 'N/A' }}
+          {{ ex.title }}: {{ getGradeForStudentAndExercise(student.id, ex.id) || '-' }}
         </li>
       </ul>
     </section>
