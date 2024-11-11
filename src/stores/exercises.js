@@ -1,27 +1,40 @@
-import { ref } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { ref, onMounted } from 'vue'
 import { defineStore } from 'pinia'
-import { v4 as uuid } from 'uuid'
-import { createMockExercise } from '@/utils/functions'
-
-const getInitialValues = () => {
-  const defaultValues = [createMockExercise(1), createMockExercise(2), createMockExercise(3)]
-  return useStorage('exercises', defaultValues)
-}
+import { getExercises, storeExercise, updateExercise, deleteExercise  } from '@/services/exerciseService'
 
 export const useExercisesStore = defineStore('exercises', () => {
-  const list = ref(getInitialValues())
+  const list = ref([])
 
-  function addExercise(exercise) {
-    list.value.push({
-      id: uuid(),
-      ...exercise
-    })
+  onMounted(async () => {
+    list.value = await getExercises();
+  })
+
+  async function addExercise(exercise) {
+    try {
+      const newExercise = await storeExercise(exercise);
+      list.value.push(newExercise);
+    } catch (error) {
+      console.error('Error adding new exercise:', error)
+    }
   }
 
-  function removeExercise(exerciseId) {
-    list.value = list.value.filter((ex) => ex.id !== exerciseId)
+  async function modifyExercise(exerciseId, exercise) {
+    try {
+      const updatedExercise = await updateExercise(exerciseId, exercise);
+      list.value = list.value.map(ex => ex.id === exerciseId ? updatedExercise : ex);
+    } catch (error) {
+      console.error('Error updating exercise:', error);
+    }
   }
 
-  return { list, addExercise, removeExercise }
+  async function removeExercise(exerciseId) {
+    try {
+      await deleteExercise(exerciseId);
+      list.value = list.value.filter(exercise => exercise.id !== exerciseId);
+    } catch (error) {
+      console.error('Error removing exercise:', error);
+    }
+  }
+
+  return { list, addExercise, modifyExercise, removeExercise }
 })
