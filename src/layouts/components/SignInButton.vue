@@ -15,6 +15,7 @@ async function handleGithubCallback() {
   const token = urlParams.get('token');
   if (token) {
     authStore.setToken(token);
+    await authStore.setCurrentUser();
     router.push('/');
   }
 }

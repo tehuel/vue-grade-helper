@@ -1,5 +1,5 @@
 <script setup>
-import SignInButton from '@/components/SignInButton.vue';
+import SignInButton from '@/layouts/components/SignInButton.vue';
 import { RouterLink, RouterView } from 'vue-router';
 
 
