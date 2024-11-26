@@ -27,6 +27,8 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = null;
     isAuthenticated.value = false;
     localStorage.removeItem('githubToken');
+    localStorage.removeItem('currentUser');
+    window.location.href = '/';
   }
 
   return { user, token, isAuthenticated, setCurrentUser ,setToken, logout };
