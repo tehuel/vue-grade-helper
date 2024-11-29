@@ -16,7 +16,7 @@ import FooterComponent from '@/components/FooterComponent.vue';
         <MainNavbar />
       </header>
       
-      <main class="container">
+      <main class="bg-light m-2 m-sm-3 p-3 p-lg-5 border rounded">
         <RouterView />
       </main>
       
