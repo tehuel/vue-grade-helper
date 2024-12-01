@@ -2,17 +2,22 @@
 import { storeToRefs } from 'pinia';
 import { useCoursesStore } from '@/stores/courses';
 import { RouterLink } from 'vue-router';
+import { onMounted } from 'vue';
 
 const coursesStore = useCoursesStore();
-const { list: courses } = storeToRefs(coursesStore);
+const { list: courses, loading, error } = storeToRefs(coursesStore);
 
-function handleRemove(courseId) {
-  coursesStore.removeCourse(courseId);
-}
+const handleRemove = async (courseId) => await coursesStore.removeCourse(courseId);
+
+onMounted(async () => await coursesStore.fetchCourses());
 </script>
 
 <template>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+<div v-if="loading" class="loading">Loading courses...</div>
+
+<div v-else-if="error" class="error">{{ error }}</div>
+
+<div v-else class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
   <div class="col" v-for="course in courses" :key="course.id">
     <div class="card h-100">
       <div class="card-body row">
