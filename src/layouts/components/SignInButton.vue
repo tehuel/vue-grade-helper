@@ -15,6 +15,7 @@ async function handleGithubCallback() {
   const token = urlParams.get('token');
   if (token) {
     authStore.setToken(token);
+    await authStore.setCurrentUser();
     router.push('/');
   }
 }
@@ -25,5 +26,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <button @click="loginWithGithub"><i class="ri-github-fill"></i> Sign In with Github</button>
+  <button @click="loginWithGithub" class="btn btn-dark">
+    <i class="ri-github-fill pe-sm-2"></i> 
+    <span class="d-none d-sm-inline">Sign In with Github</span>
+  </button>
 </template>
