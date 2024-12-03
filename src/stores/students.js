@@ -1,31 +1,39 @@
-import { ref } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { onMounted, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { v4 as uuid } from 'uuid'
-import { createMockStudent } from '@/utils/functions'
-
-const getInitialValues = () => {
-  const defaultValues = [
-    createMockStudent('Ana'),
-    createMockStudent('Beto'),
-    createMockStudent('Ceci')
-  ]
-  return useStorage('students', defaultValues)
-}
+import { deleteStudent, getStudents, storeStudent, updateStudent } from '../services/studentService'
 
 export const useStudentsStore = defineStore('students', () => {
-  const list = ref(getInitialValues())
+  const list = ref([])
 
-  function addStudent(student) {
-    list.value.push({
-      id: uuid(),
-      ...student
-    })
+  onMounted(async () => {
+    list.value = await getStudents();
+  })
+  async function addStudent(student) {
+    try {
+      const newStudent = await storeStudent(student);
+      list.value.push(newStudent);
+    } catch (error) {
+      console.error('Error adding new student:', error)
+    }
   }
 
-  function removeStudent(studentId) {
-    list.value = list.value.filter((st) => st.id !== studentId)
+  async function modifyStudent(id, student) {
+    try {
+      const updatedStudent = await updateStudent(id, student);
+      list.value = list.value.map(st => st.id === id ? updatedStudent : st);
+    } catch (error) {
+      console.error('Error updating student:', error);
+    }
   }
 
-  return { list, addStudent, removeStudent }
+  async function removeStudent(studentId) {
+    try {
+      await deleteStudent(studentId);
+      list.value = list.value.filter(student => student.id !== studentId);
+    } catch (error) {
+      console.error('Error removing student:', error);
+    }
+  }
+
+  return { list, addStudent, removeStudent, modifyStudent }
 })

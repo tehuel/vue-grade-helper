@@ -1,15 +1,12 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useStudentsStore } from '@/stores/students'
-import { useGradesStore } from '@/stores/grades'
 
 const studentsStore = useStudentsStore()
-const gradesStore = useGradesStore()
 const { list: students } = storeToRefs(studentsStore)
 
 function handleRemove(studentId) {
   studentsStore.removeStudent(studentId)
-  gradesStore.removeGradesForStudent(studentId)
 }
 </script>
 
@@ -26,7 +23,7 @@ function handleRemove(studentId) {
       <tbody>
         <tr v-for="st in students" :key="st">
           <th scope="row">
-            <b>{{ st.lastName + " " + st.firstName }}</b>
+            <b>{{ st.last_name + " " + st.first_name }}</b>
           </th>
           <td>
             <a v-bind:href="'https://github.com/' + st.githubUsername + '/plataformas-moviles-entregas/'">

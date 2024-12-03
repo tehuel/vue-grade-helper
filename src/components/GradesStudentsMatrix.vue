@@ -33,14 +33,14 @@ const showDetails = (studentId, exerciseId) => {
       <tbody>
         <tr v-for="st in filteredStudentsList()" :key="st">
           <th scope="row">
-            <a v-bind:href="'https://github.com/' + st.githubUsername">{{ st.lastName + " " +st.firstName }}</a>
+            <a v-bind:href="'https://github.com/' + st.githubUsername">{{ st.last_name + " " +st.first_name }}</a>
             <i @click="applyStudentsListFilter(st.id)" v-bind:class="{ 'ri-eye-off-line': isStudentInFilter(st.id), 'ri-eye-line': !isStudentInFilter(st.id) }" style="cursor: pointer; margin-inline: 5px;"></i>
           </th>
           <td v-for="ex in filteredExercisesList()" :key="{ ...ex, ...st }">
             <div style="display: flex; cursor: pointer;" @click="showDetails(st.id, ex.id)">
-              <check-online-status :student="st" :exercise="ex" /> | Grade: {{ getGradeForStudentAndExercise(st.id, ex.id) == "" ? getGradeForStudentAndExercise(st.id, ex.id) : "N/A" }}
+              <check-online-status :student="st" :exercise="ex" /> | Grade: {{ getGradeForStudentAndExercise(st.id, ex.id) || '-' }}
             </div>
-            <add-grade-form :studentId="st.id" :exerciseId="ex.id" v-if="showGrader"/> 
+            <add-grade-form :student_id="st.id" :exercise_id="ex.id" v-if="showGrader"/> 
           </td>
         </tr>
       </tbody>

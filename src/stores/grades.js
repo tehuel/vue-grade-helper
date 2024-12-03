@@ -1,39 +1,37 @@
-import { computed, ref } from 'vue'
-import { defineStore } from 'pinia'
+import { computed, onMounted, ref } from 'vue';
+import { defineStore } from 'pinia';
+import { getGrades, storeGrade } from '@/services/gradesService';
 
 export const useGradesStore = defineStore('grades', () => {
-  const list = ref([])
+  const list = ref([]);
 
-  function addGrade(studentId, exerciseId, grade) {
-    list.value.push({
-      date: new Date().toJSON(),
-      studentId,
-      exerciseId,
-      grade
-    })
-  }
+  onMounted(async () => {
+    list.value = await getGrades();
+  });
 
-  function removeGradesForStudent(studentId) {
-    list.value = list.value.filter((gradeRecord) => gradeRecord.studentId !== studentId)
-  }
-
-  function removeGradesForExercise(exerciseId) {
-    list.value = list.value.filter((gradeRecord) => gradeRecord.exerciseId !== exerciseId)
+  async function addGrade(grade) {
+    try {
+      const newGrade = await storeGrade(grade)
+      list.value.push(newGrade)
+    } catch (error) {
+      console.log('Error adding new grade', error)
+    }
   }
 
   const getAllGradesForStudent = computed(() => {
-    return (studentId) => {
-      return list.value.filter((gradeRecord) => gradeRecord.studentId == studentId)
+    return (student_id) => {
+      return list.value.filter((gradeRecord) => gradeRecord.student_id == student_id)
     }
   })
 
   const getGradesForStudent = computed(() => {
-    return (studentId) => {
-      const allGrades = getAllGradesForStudent.value(studentId)
+
+    return (student_id) => {
+      const allGrades = getAllGradesForStudent.value(student_id)
       const keyedByExercise = allGrades.reduce(
         (result, gradeRecord) =>
           Object.assign(result, {
-            [gradeRecord.exerciseId]: gradeRecord
+            [gradeRecord.exercise_id]: gradeRecord
           }),
         {}
       )
@@ -42,18 +40,18 @@ export const useGradesStore = defineStore('grades', () => {
   })
 
   const getAllGradesForExercise = computed(() => {
-    return (exerciseId) => {
-      return list.value.filter((gradeRecord) => gradeRecord.exerciseId == exerciseId)
+    return (exercise_id) => {
+      return list.value.filter((gradeRecord) => gradeRecord.exercise_id == exercise_id)
     }
   })
 
   const getGradesForExercise = computed(() => {
-    return (exerciseId) => {
-      const allGrades = getAllGradesForExercise.value(exerciseId)
+    return (exercise_id) => {
+      const allGrades = getAllGradesForExercise.value(exercise_id)
       const latestGradeByStudent = allGrades.reduce(
         (result, gradeRecord) =>
           Object.assign(result, {
-            [gradeRecord.studentId]: gradeRecord
+            [gradeRecord.student_id]: gradeRecord
           }),
         {}
       )
@@ -62,20 +60,18 @@ export const useGradesStore = defineStore('grades', () => {
   })
 
   const getGradeForStudentAndExercise = computed(() => {
-    return (studentId, exerciseId) => {
+    return (student_id, exercise_id) => {
       const allGrades = list.value.filter((gradeRecord) => {
-        return gradeRecord.studentId == studentId && gradeRecord.exerciseId == exerciseId
+        return gradeRecord.student_id == student_id && gradeRecord.exercise_id == exercise_id
       })
       const lastGrade = allGrades.pop()
-      return lastGrade
+      return lastGrade?.score || "N/A"
     }
   })
 
   return {
     list,
     addGrade,
-    removeGradesForStudent,
-    removeGradesForExercise,
     getGradesForStudent,
     getGradesForExercise,
     getGradeForStudentAndExercise

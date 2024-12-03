@@ -1,10 +1,16 @@
 <script setup>
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia';
 import { useStudentsStore } from '@/stores/students'
+import { useCoursesStore } from '@/stores/courses';
+
+const coursesStore = useCoursesStore()
+const { list: courses } = storeToRefs(coursesStore)
 
 const EMPTY_STUDENT = {
-  firstName: '',
-  lastName: '',
+  first_name: '',
+  last_name: '',
+  course_id: '',
   githubUsername: ''
 }
 
@@ -24,13 +30,21 @@ function onSubmit() {
   <form @submit.prevent="onSubmit">
     <div class="grid">
       <div>
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" v-model="student.firstName" />
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" v-model="student.first_name" />
       </div>
 
       <div>
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" v-model="student.lastName" />
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" v-model="student.last_name" />
+      </div>
+
+      <div>
+        <label for="course_id">Course ID</label>
+        <select id="course_id" v-model="student.course_id">
+          <option disabled value="">Please select one</option>
+          <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.name }}</option>
+        </select>
       </div>
 
       <div>
