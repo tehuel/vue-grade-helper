@@ -9,6 +9,7 @@ import GradesView from '../views/GradesView.vue';
 import CoursesView from '../views/CoursesView.vue';
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import MainLayout from '@/layouts/MainLayout.vue';
+import CourseDetails from '@/components/courses/CourseDetails.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
           path: '/courses',
           name: 'courses',
           component: CoursesView
+        },
+        {
+          path: '/courses/:id',
+          name: 'course',
+          component: CourseDetails
         },
         {
           path: '/students',
