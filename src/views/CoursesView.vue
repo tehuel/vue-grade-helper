@@ -7,8 +7,10 @@ import CoursesList from '@/components/courses/CoursesList.vue';
   <div>
     <h1>Courses</h1>
 
-    <details>
-      <summary role="button" class="secondary">Add</summary>
+    <details class="my-3">
+      <summary role="button" class="btn btn-primary text-white">
+        <span><i class="ri-add-line"></i>Add new course</span>
+      </summary>
       <add-course-form />
     </details>
 
