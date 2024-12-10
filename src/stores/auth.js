@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import { apiRequest } from '@/services/apiService';
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref(JSON.parse(localStorage.getItem('currentUser')) || null);
+  const user = ref(JSON.parse(localStorage.getItem('currentUser')) || {});
   const token = ref(localStorage.getItem('githubToken') || null);
   const isAuthenticated = ref(!!token.value);
 
